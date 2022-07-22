@@ -1,4 +1,4 @@
-package com.blogrestapi.blog.utils;
+package com.blogrestapi.blog.untils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

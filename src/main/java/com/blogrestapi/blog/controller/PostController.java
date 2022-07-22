@@ -3,7 +3,7 @@ package com.blogrestapi.blog.controller;
 import com.blogrestapi.blog.payload.PostDto;
 import com.blogrestapi.blog.payload.PostResponse;
 import com.blogrestapi.blog.service.PostService;
-import com.blogrestapi.blog.utils.AppConstants;
+import com.blogrestapi.blog.untils.AppConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Api(value = "CRUD Rest APIs for Post resources")
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 public class PostController {
 
     @Resource
@@ -28,13 +28,13 @@ public class PostController {
 
     @ApiOperation(value = "Create Post REST API")
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/api/v1/posts")
+    @PostMapping("/posts")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Get All Posts REST API")
-    @GetMapping("/api/v1/posts")
+    @GetMapping("/posts")
     public PostResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
@@ -45,14 +45,14 @@ public class PostController {
     }
 
     @ApiOperation(value = "Get Post By Id REST API")
-    @GetMapping("/api/v1/posts/{id}")
+    @GetMapping("/posts/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update Post By Id REST API")
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/api/v1/posts/{id}")
+    @PutMapping("/posts/{id}")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") Long id) {
         PostDto responsePost = postService.updatePost(postDto, id);
 
@@ -61,7 +61,7 @@ public class PostController {
 
     @ApiOperation(value = "Delete Post By Id REST API")
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/api/v1/posts/{id}")
+    @DeleteMapping("/posts/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") Long id) {
         postService.deletePost(id);
 

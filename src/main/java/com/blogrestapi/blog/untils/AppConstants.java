@@ -1,4 +1,4 @@
-package com.blogrestapi.blog.utils;
+package com.blogrestapi.blog.untils;
 
 public class AppConstants {
     public static final String DEFAULT_PAGE_NUMBER = "0";

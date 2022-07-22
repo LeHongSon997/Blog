@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Collections;
 
-@Api(value = "Auth controller exposes siginin and signup REST APIs")
+@Api(value = "Auth controller exposes signin and signup REST APIs")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -45,7 +45,7 @@ public class AuthController {
     @Resource
     private JwtTokenProvider tokenProvider;
 
-    @ApiOperation(value = "REST API to Register or Signup user to Blog app")
+    @ApiOperation(value = "REST API to SignIn or Login user to Blog app")
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -57,7 +57,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtAuthResponse(token));
     }
 
-    @ApiOperation(value = "REST API to Signin or Login user to Blog app")
+    @ApiOperation(value = "REST API to Register or Signup user to Blog app")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
 
@@ -78,7 +78,7 @@ public class AuthController {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
 
         userRepository.save(user);
